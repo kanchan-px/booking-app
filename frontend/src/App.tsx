@@ -1,11 +1,20 @@
-function App() {
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Layout from "./layouts/Layout";
+
+const App = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <h1 className="text-5xl font-bold text-blue-600">
-        Tailwind Working 🚀
-      </h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout>
+          <p>Welcome to the Home Page</p>
+        </Layout>} />
+        <Route path="/search" element={<Layout>
+          <p>Welcome to the Search Page</p>
+        </Layout>} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
