@@ -1,6 +1,7 @@
 // src/types.ts
 
 export type RegisterFormData = {
+  
   firstName: string;
   lastName: string;
   email: string;

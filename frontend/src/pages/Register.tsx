@@ -2,28 +2,47 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import type { RegisterFormData } from "../types";
 import * as apiClient from "../api-clients";
+import { useAppContext } from "../contexts/AppContext";
+import { useNavigate } from "react-router-dom";
 
-// export type RegisterFormData = {
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   password: string;
-//   confirmPassword: string;
-// };
 const Register = () => {
+  const navigate = useNavigate();
+  const { showToast } = useAppContext();
 
   const { register,watch, handleSubmit, formState: { errors } } = useForm<RegisterFormData>();
 
   const mutation = useMutation({
-  mutationFn: (data: RegisterFormData) => apiClient.register(data),
-  onSuccess: () => {
-    console.log("User registered successfully");
+  mutationFn: async (data: RegisterFormData) => {
+    console.log("mutationFn called");
+
+    const result = await apiClient.register(data);
+
+    console.log("mutationFn completed successfully!");
+
+    return result;
   },
+
+  onSuccess: () => {
+    console.log("onSuccess fired");
+
+    showToast({
+      message: "registered successfully",
+      type: "SUCCESS",
+    });
+    navigate("/");
+  },
+
   onError: (error: Error) => {
-    console.error(error.message);
+    console.log("onError fired", error);
+
+    showToast({
+      message: error.message,
+      type: "ERROR",
+    });
   },
 });
 
+  console.log("Current status:", mutation.status);
   const onSubmit = handleSubmit((data)=>{
     mutation.mutate(data);
   })

@@ -2,7 +2,7 @@
 const Header = ()=>{
   return(
     <div className="bg-blue-800 py-6">
-      <div className="container mx-auto flex justify-between">
+      <div className="container mx-auto flex justify-between ">
         <span className="text-white text-3xl  font-bold tracking-tight">
           <Link to="/">MernHolidays.com</Link>
         </span>
